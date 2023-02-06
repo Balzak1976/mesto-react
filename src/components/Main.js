@@ -1,28 +1,12 @@
 import React from 'react';
 
-function Main() {
-  function handleEditAvatarClick() {
-    const popupEditAvatarElem = document.querySelector('.popup_type_avatar');
-
-    popupEditAvatarElem.classList.add('popup_opened');
-  }
-
-  function handleEditProfileClick() {
-    const popupEditProfileElem = document.querySelector('.popup_type_profile');
-
-    popupEditProfileElem.classList.add('popup_opened');
-  }
-
-  function handleAddPlaceClick() {
-    const popupAddPlaceElem = document.querySelector('.popup_type_card');
-
-    popupAddPlaceElem.classList.add('popup_opened');
-  }
+function Main({onEditAvatar, onEditProfile, onAddPlace}) {
+  
 
   return (
     <main className='content'>
       <section className='profile'>
-        <div className='profile__avatar-cover' onClick={handleEditAvatarClick}>
+        <div className='profile__avatar-cover' onClick={onEditAvatar}>
           <div className='profile__avatar-icon'></div>
           <img className='profile__user-avatar' src={require('../images/avatar.jpg')} alt='аватар' />
         </div>
@@ -31,7 +15,7 @@ function Main() {
             <h1 className='profile__user-name'>Жак-Ив Кусто</h1>
             <button
               className='profile__edit-button'
-              onClick={handleEditProfileClick}
+              onClick={onEditProfile}
               type='button'
               aria-label='редактировать'
             ></button>
@@ -40,7 +24,7 @@ function Main() {
         </article>
         <button
           className='profile__add-button'
-          onClick={handleAddPlaceClick}
+          onClick={onAddPlace}
           type='button'
           aria-label='добавить'
         ></button>
