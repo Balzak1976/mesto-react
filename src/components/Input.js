@@ -2,6 +2,7 @@ import React from 'react';
 
 function Input({ input }) {
   const { classNameModifier, placeholder, nameAttribute, typeAttribute, minLength, maxLength } = input;
+  
   return (
     <>
       <label className='form__field'>

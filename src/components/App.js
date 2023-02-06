@@ -2,7 +2,8 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
-import { inputConfig } from '../utils/settings.js';
+import ImagePopup from './ImagePopup';
+import { inputConfig } from '../utils/settings';
 
 function App() {
   return (
@@ -42,47 +43,7 @@ function App() {
           children={false}
         />
 
-        <section className='popup popup_type_zoom-picture'>
-          <div className='popup__container popup__container_type_zoom-picture'>
-            <button
-              className='popup__close popup__close_type_zoom-picture'
-              type='button'
-              aria-label='закрыть'
-            ></button>
-            <figure className='zoom-picture'>
-              <img
-                className='zoom-picture__image'
-                src='#'
-                alt='картинка'
-              />
-              <figcaption className='zoom-picture__caption'></figcaption>
-            </figure>
-          </div>
-        </section>
-
-        <section className='popup popup_type_del-card'>
-          <div className='popup__container'>
-            <button
-              className='popup__close'
-              type='button'
-              aria-label='закрыть'
-            ></button>
-            <h2 className='popup__title'>Вы уверены?</h2>
-
-            <form
-              className='form form_type_delete'
-              name='delCard'
-            >
-              <button
-                className='form__submit'
-                name='submit'
-                type='submit'
-              >
-                Да
-              </button>
-            </form>
-          </div>
-        </section>
+        <ImagePopup/>
         
       </div>
 
