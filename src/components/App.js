@@ -1,67 +1,20 @@
-import logo from './images/logo.svg';
-// import './App.css';
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
+import PopupWithForm from './PopupWithForm';
 
 function App() {
   return (
     <div className="root-app">
       <div className="page">
 
-      <header className="header">
-        <a href="#">
-          <img
-            className="logo"
-            src={logo}
-            alt="логотип"
-          />
-        </a>
-      </header>
+      <Header/>
 
-      <main className="content">
+      <Main/>
 
-        <section className="profile">
-          <div className="profile__avatar-cover">
-            <div className="profile__avatar-icon"></div>
-            <img
-              className="profile__user-avatar"
-              src="<%=require('./images/avatar.jpg')%>"
-              alt="аватар"
-            />
-          </div>
-          <article className="profile__info">
-            <div className="profile__header">
-              <h1 className="profile__user-name">
-                Жак-Ив Кусто
-              </h1>
-              <button
-                className="profile__edit-button"
-                type="button"
-                aria-label="редактировать"
-              ></button>
-            </div>
-            <p className="profile__user-about">
-              Исследователь
-            </p>
-          </article>
-          <button
-            className="profile__add-button"
-            type="button"
-            aria-label="добавить"
-          ></button>
-        </section>
-
-        <section className="cards">
-          <ul className="cards__list">
-            
-          </ul>
-        </section>
-
-      </main>
-
-      <footer className="footer">
-        <p className="footer__copyright">
-          &copy; 2022. Максим Скороходов
-        </p>
-      </footer>
+      <Footer />
+        
+      <PopupWithForm />
 
       <section className="popup popup_type_profile">
         <div className="popup__container">
@@ -77,7 +30,7 @@ function App() {
           <form
             className="form form_type_profile"
             name="userProfile"
-            novalidate
+            noValidate
           >
             <fieldset className="form__container">
               <label className="form__field">
@@ -87,8 +40,8 @@ function App() {
                   placeholder="Имя"
                   name="name"
                   type="text"
-                  minlength="2"
-                  maxlength="40"
+                  minLength="2"
+                  maxLength="40"
                   required
                 />
                 <span className="form__input-error user-name-input-error"></span>
@@ -100,8 +53,8 @@ function App() {
                   placeholder="О себе"
                   name="about"
                   type="text"
-                  minlength="2"
-                  maxlength="200"
+                  minLength="2"
+                  maxLength="200"
                   required
                 />
                 <span className="form__input-error user-about-input-error">
@@ -133,7 +86,7 @@ function App() {
           <form
             className="form form_type_card"
             name="addCard"
-            novalidate
+            noValidate
           >
             <fieldset className="form__container">
               <label className="form__field">
@@ -143,8 +96,8 @@ function App() {
                   placeholder="Название"
                   name="name"
                   type="text"
-                  minlength="2"
-                  maxlength="30"
+                  minLength="2"
+                  maxLength="30"
                   required
                 />
                 <span className="form__input-error card-name-input-error">
@@ -216,7 +169,7 @@ function App() {
         </div>
       </section>
 
-      <section className="popup popup_type_update-avatar">
+      <section className="popup popup_type_edit-avatar">
         <div className="popup__container">
           <button
             className="popup__close"
@@ -230,7 +183,7 @@ function App() {
           <form
             className="form form_type_update-avatar"
             name="updateAvatar"
-            novalidate
+            noValidate
           >
             <fieldset className="form__container">
               <label className="form__field">
