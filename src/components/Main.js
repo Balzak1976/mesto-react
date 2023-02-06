@@ -2,7 +2,7 @@ import React from 'react';
 
 function Main() {
   function handleEditAvatarClick() {
-    const popupEditAvatarElem = document.querySelector('.popup_type_edit-avatar');
+    const popupEditAvatarElem = document.querySelector('.popup_type_avatar');
 
     popupEditAvatarElem.classList.add('popup_opened');
   }

@@ -1,66 +1,42 @@
-import React from 'react'
+import React from 'react';
+import Input from './Input';
 
-function PopupWithForm(props) {
+function PopupWithForm({ classNameModifier, title, inputs, children }) {
+  const inputComponents = children ?
+    inputs.map((input, index) => <Input key={index} input={input}/>) : null;
+
   return (
-    <div>
-      <section className="popup popup_type_profile">
-        <div className="popup__container">
+    <>
+      <section className={`popup popup_type_${classNameModifier}`}>
+        <div className='popup__container'>
           <button
-            className="popup__close popup__close_type_profile"
-            type="button"
-            aria-label="закрыть"
+            className='popup__close'
+            type='button'
+            aria-label='закрыть'
           ></button>
-          <h2 className="popup__title">
-            Редактировать профиль
-          </h2>
+          <h2 className='popup__title'>{title}</h2>
 
           <form
-            className="form form_type_profile"
-            name="userProfile"
+            className={`form form_type_${classNameModifier}`}
+            name={classNameModifier}
             noValidate
           >
-            <fieldset className="form__container">
-              <label className="form__field">
-                <input
-                  className="form__input form__input_user_name"
-                  id="user-name-input"
-                  placeholder="Имя"
-                  name="name"
-                  type="text"
-                  minLength="2"
-                  maxLength="40"
-                  required
-                />
-                <span className="form__input-error user-name-input-error"></span>
-              </label>
-              <label className="form__field">
-                <input
-                  className="form__input form__input_user_about"
-                  id="user-about-input"
-                  placeholder="О себе"
-                  name="about"
-                  type="text"
-                  minLength="2"
-                  maxLength="200"
-                  required
-                />
-                <span className="form__input-error user-about-input-error">
-                </span>
-              </label>
-            </fieldset>
-            <button
-              className="form__submit"
-              name="submit"
-              type="submit"
-              disabled
-            >Сохранить</button>
-          </form>
 
+            {children && <fieldset className='form__container'>{inputComponents}</fieldset>}
+            
+            <button
+              className='form__submit'
+              name='submit'
+              type='submit'
+              disabled
+            >
+              {children ? 'Сохранить' : 'Да'}
+            </button>
+          </form>
         </div>
       </section>
-    </div>
-  )
+    </>
+  );
 }
 
-export default PopupWithForm
-
+export default PopupWithForm;
