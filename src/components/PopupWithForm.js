@@ -1,13 +1,19 @@
 import React from 'react';
 import Input from './Input';
 
-function PopupWithForm({ classNameModifier, title, inputs, children }) {
+function PopupWithForm({ classNameModifier, title, inputs, children, isOpen }) {
   const inputComponents = children ?
-    inputs.map((input, index) => <Input key={index} input={input}/>) : null;
+    inputs.map((input, index) => <Input key={index} input={input} />) : null;
+  
+
 
   return (
     <>
-      <section className={`popup popup_type_${classNameModifier}`}>
+      <section
+        className={
+          `popup popup_type_${classNameModifier} ${isOpen && 'popup_opened'}`
+        }
+      >
         <div className='popup__container'>
           <button
             className='popup__close'

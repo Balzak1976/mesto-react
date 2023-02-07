@@ -11,23 +11,9 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
 
-  function handleEditAvatarClick() {
-    const popupEditAvatarElem = document.querySelector('.popup_type_avatar');
-
-    popupEditAvatarElem.classList.add('popup_opened');
-  }
-
-  function handleEditProfileClick() {
-    const popupEditProfileElem = document.querySelector('.popup_type_profile');
-
-    popupEditProfileElem.classList.add('popup_opened');
-  }
-
-  function handleAddPlaceClick() {
-    const popupAddPlaceElem = document.querySelector('.popup_type_card');
-
-    popupAddPlaceElem.classList.add('popup_opened');
-  }
+  const handleEditAvatarClick = () => setEditAvatarPopupOpen(true);
+  const handleEditProfileClick = () => setEditProfilePopupOpen(true);
+  const handleAddPlaceClick = () => setAddPlacePopupOpen(true);
 
   return (
     <div className='root-app'>
@@ -47,6 +33,7 @@ function App() {
           title='Обновить аватар'
           inputs={inputConfig.avatar}
           children={true}
+          isOpen={isEditAvatarPopupOpen}
         />
 
         <PopupWithForm
@@ -54,6 +41,7 @@ function App() {
           title='Редактировать профиль'
           inputs={inputConfig.profile}
           children={true}
+          isOpen={isEditProfilePopupOpen}
         />
 
         <PopupWithForm
@@ -61,6 +49,7 @@ function App() {
           title='Новое место'
           inputs={inputConfig.card}
           children={true}
+          isOpen={isAddPlacePopupOpen}
         />
 
         <PopupWithForm
@@ -68,9 +57,10 @@ function App() {
           // classNameModifier='del-card popup_opened'
           title='Вы уверены?'
           children={false}
+          isOpen={false}
         />
 
-        <ImagePopup/>
+        <ImagePopup />
       </div>
 
       <template className='card-template'>
