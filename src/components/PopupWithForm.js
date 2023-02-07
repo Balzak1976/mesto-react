@@ -1,11 +1,11 @@
 import React from 'react';
 import Input from './Input';
 
-function PopupWithForm({ classNameModifier, title, inputs, children, isOpen }) {
+function PopupWithForm({ popupConfig, isOpen, onClose }) {
+  const { classNameModifier, title, children, inputs } = popupConfig;
+
   const inputComponents = children ?
     inputs.map((input, index) => <Input key={index} input={input} />) : null;
-  
-
 
   return (
     <>
@@ -17,6 +17,7 @@ function PopupWithForm({ classNameModifier, title, inputs, children, isOpen }) {
         <div className='popup__container'>
           <button
             className='popup__close'
+            onClick={onClose}
             type='button'
             aria-label='закрыть'
           ></button>

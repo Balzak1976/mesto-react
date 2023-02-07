@@ -4,13 +4,18 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
-import { inputConfig } from '../utils/settings';
+import { popupConfig } from '../utils/settings';
 
 function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isPopupClose, setPopupClose] = useState(false);
 
+  const closeAllPopups = () => {
+    console.log("first");
+    setPopupClose(true);
+  };
   const handleEditAvatarClick = () => setEditAvatarPopupOpen(true);
   const handleEditProfileClick = () => setEditProfilePopupOpen(true);
   const handleAddPlaceClick = () => setAddPlacePopupOpen(true);
@@ -29,35 +34,27 @@ function App() {
         <Footer />
 
         <PopupWithForm
-          classNameModifier='avatar'
-          title='Обновить аватар'
-          inputs={inputConfig.avatar}
-          children={true}
+          popupConfig={popupConfig.avatar}
           isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
         />
 
         <PopupWithForm
-          classNameModifier='profile'
-          title='Редактировать профиль'
-          inputs={inputConfig.profile}
-          children={true}
+          popupConfig={popupConfig.profile}
           isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
         />
 
         <PopupWithForm
-          classNameModifier='card'
-          title='Новое место'
-          inputs={inputConfig.card}
-          children={true}
+          popupConfig={popupConfig.card}
           isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
         />
 
         <PopupWithForm
-          classNameModifier='del-card'
-          // classNameModifier='del-card popup_opened'
-          title='Вы уверены?'
-          children={false}
+          popupConfig={popupConfig.delCard}
           isOpen={false}
+          onClose={closeAllPopups}
         />
 
         <ImagePopup />

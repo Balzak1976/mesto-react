@@ -22,53 +22,75 @@ export const apiSettings = {
   },
 }; */
 
-export const inputConfig = {
-  avatar: [
-    {
-      classNameModifier: 'avatar_img-link',
-      placeholder: 'Ссылка на картинку',
-      nameAttribute: 'avatar',
-      typeAttribute: 'url',
-      minLength: '2',
-      maxLength: '200',
-    },
-  ],
+export const popupConfig = {
+  avatar: {
+    classNameModifier: 'avatar',
+    title: 'Обновить аватар',
+    children: true,
+    inputs: [
+      {
+        classNameModifier: 'avatar_img-link',
+        placeholder: 'Ссылка на картинку',
+        nameAttribute: 'avatar',
+        typeAttribute: 'url',
+        minLength: '2',
+        maxLength: '200',
+      },
+    ],
+  },
 
-  profile: [
-    {
-      classNameModifier: 'user_name',
-      placeholder: 'Имя',
-      nameAttribute: 'name',
-      typeAttribute: 'text',
-      minLength: '2',
-      maxLength: '40',
-    },
-    {
-      classNameModifier: 'user_about',
-      placeholder: 'О себе',
-      nameAttribute: 'about',
-      typeAttribute: 'text',
-      minLength: '2',
-      maxLength: '200',
-    },
-  ],
+  profile: {
+    classNameModifier: 'profile',
+    title: 'Редактировать профиль',
+    children: true,
+    inputs: [
+      {
+        classNameModifier: 'user_name',
+        placeholder: 'Имя',
+        nameAttribute: 'name',
+        typeAttribute: 'text',
+        minLength: '2',
+        maxLength: '40',
+      },
+      {
+        classNameModifier: 'user_about',
+        placeholder: 'О себе',
+        nameAttribute: 'about',
+        typeAttribute: 'text',
+        minLength: '2',
+        maxLength: '200',
+      },
+    ],
+  },
 
-  card: [
-    {
-      classNameModifier: 'card_name',
-      placeholder: 'Название',
-      nameAttribute: 'name',
-      typeAttribute: 'text',
-      minLength: '2',
-      maxLength: '30',
-    },
-    {
-      classNameModifier: 'card_img-link',
-      placeholder: 'Ссылка на картинку',
-      nameAttribute: 'link',
-      typeAttribute: 'url',
-      minLength: '2',
-      maxLength: '200',
-    },
-  ],
+  card: {
+    classNameModifier: 'card',
+    title: 'Новое место',
+    children: true,
+    inputs: [
+      {
+        classNameModifier: 'card_name',
+        placeholder: 'Название',
+        nameAttribute: 'name',
+        typeAttribute: 'text',
+        minLength: '2',
+        maxLength: '30',
+      },
+      {
+        classNameModifier: 'card_img-link',
+        placeholder: 'Ссылка на картинку',
+        nameAttribute: 'link',
+        typeAttribute: 'url',
+        minLength: '2',
+        maxLength: '200',
+      },
+    ],
+  },
+
+  delCard: {
+    classNameModifier: 'del-card',
+    title: 'Вы уверены?',
+    children: false,
+    inputs: null,
+  },
 };
