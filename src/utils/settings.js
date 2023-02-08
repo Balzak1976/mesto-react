@@ -26,8 +26,8 @@ export const popupConfig = {
   avatar: {
     classNameModifier: 'avatar',
     title: 'Обновить аватар',
-    children: true,
-    inputs: [
+    btnTitle: 'Сохранить',
+    children: [
       {
         classNameModifier: 'avatar_img-link',
         placeholder: 'Ссылка на картинку',
@@ -42,8 +42,8 @@ export const popupConfig = {
   profile: {
     classNameModifier: 'profile',
     title: 'Редактировать профиль',
-    children: true,
-    inputs: [
+    btnTitle: 'Сохранить',
+    children: [
       {
         classNameModifier: 'user_name',
         placeholder: 'Имя',
@@ -66,8 +66,8 @@ export const popupConfig = {
   card: {
     classNameModifier: 'card',
     title: 'Новое место',
-    children: true,
-    inputs: [
+    btnTitle: 'Сохранить',
+    children: [
       {
         classNameModifier: 'card_name',
         placeholder: 'Название',
@@ -90,7 +90,7 @@ export const popupConfig = {
   delCard: {
     classNameModifier: 'del-card',
     title: 'Вы уверены?',
-    children: false,
-    inputs: null,
+    btnTitle: 'Да',
+    children: null,
   },
 };

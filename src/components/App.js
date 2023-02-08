@@ -10,11 +10,13 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
-  const [isPopupClose, setPopupClose] = useState(false);
+  const [isDelCardOpen, setDelCardOpen] = useState(true);
 
   const closeAllPopups = () => {
-    console.log("first");
-    setPopupClose(true);
+    setEditAvatarPopupOpen(false);
+    setEditProfilePopupOpen(false);
+    setAddPlacePopupOpen(false);
+    setDelCardOpen(false);
   };
   const handleEditAvatarClick = () => setEditAvatarPopupOpen(true);
   const handleEditProfileClick = () => setEditProfilePopupOpen(true);
@@ -53,7 +55,7 @@ function App() {
 
         <PopupWithForm
           popupConfig={popupConfig.delCard}
-          isOpen={false}
+          isOpen={isDelCardOpen}
           onClose={closeAllPopups}
         />
 
@@ -74,7 +76,7 @@ function App() {
               alt='картинка'
             />
             <div className='card__body'>
-              <h2 className='card__title'></h2>
+              <h2 className='card__title'>картинка</h2>
               <div className='card__like'>
                 <button
                   className='card__like-button'

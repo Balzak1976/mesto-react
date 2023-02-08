@@ -1,12 +1,9 @@
 import React from 'react';
-import Input from './Input';
+import Children from './Children';
 
 function PopupWithForm({ popupConfig, isOpen, onClose }) {
-  const { classNameModifier, title, children, inputs } = popupConfig;
-
-  const inputComponents = children ?
-    inputs.map((input, index) => <Input key={index} input={input} />) : null;
-
+  const { classNameModifier, title, btnTitle,children } = popupConfig;
+ 
   return (
     <>
       <section
@@ -29,7 +26,7 @@ function PopupWithForm({ popupConfig, isOpen, onClose }) {
             noValidate
           >
 
-            {children && <fieldset className='form__container'>{inputComponents}</fieldset>}
+            {children && <Children inputs={children} />}
             
             <button
               className='form__submit'
@@ -37,7 +34,7 @@ function PopupWithForm({ popupConfig, isOpen, onClose }) {
               type='submit'
               disabled
             >
-              {children ? 'Сохранить' : 'Да'}
+              {btnTitle}
             </button>
           </form>
         </div>
