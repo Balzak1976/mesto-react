@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../utils/Api';
+import Card from './Card';
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
   const [userAvatar, setUserAvatar] = useState(false);
   const [userName, setUserName] = useState('Жак-Ив Кусто');
   const [userDescription, setUserDescription] = useState('Исследователь');
-  // const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    console.log("useEffect");
-    api.getInitialProfile()
-      .then(dataUser => {
+    api.createQueueFetch()
+      .then(data => {
+        const [dataUser, dataCards] = data;
+
         setUserAvatar(dataUser.avatar);
         setUserName(dataUser.name);
         setUserDescription(dataUser.about);
+        
+        setCards(dataCards);
       })
       .catch(err => {
         console.log(err);
       });
   }, []);
 
-  console.log("render1");
   return (
     <main className='content'>
-      {/* {console.log("render2")} */}
       <section className='profile'>
         <div
           className='profile__avatar-cover'
@@ -59,7 +61,15 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
       </section>
 
       <section className='cards'>
-        <ul className='cards__list'></ul>
+        <ul className='cards__list'>
+          {cards.map(({ _id, ...props }) => (
+            <Card
+              key={_id}
+              props={props}
+              onCardClick={onCardClick}
+            />
+          ))}
+        </ul>
       </section>
     </main>
   );

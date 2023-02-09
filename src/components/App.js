@@ -6,7 +6,6 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import { popupConfig } from '../utils/settings';
 
-
 function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -62,34 +61,6 @@ function App() {
 
         <ImagePopup />
       </div>
-
-      <template className='card-template'>
-        <li className='card__item'>
-          <article className='card'>
-            <button
-              className='card__del-button card__del-button_hidden'
-              type='button'
-              aria-label='удалить'
-            ></button>
-            <img
-              className='card__image'
-              src='#'
-              alt='картинка'
-            />
-            <div className='card__body'>
-              <h2 className='card__title'>картинка</h2>
-              <div className='card__like'>
-                <button
-                  className='card__like-button'
-                  type='button'
-                  aria-label='лайкнуть'
-                ></button>
-                <div className='card__like-number'></div>
-              </div>
-            </div>
-          </article>
-        </li>
-      </template>
     </div>
   );
 }
