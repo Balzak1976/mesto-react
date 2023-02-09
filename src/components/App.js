@@ -6,11 +6,12 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import { popupConfig } from '../utils/settings';
 
+
 function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
-  const [isDelCardOpen, setDelCardOpen] = useState(true);
+  const [isDelCardOpen, setDelCardOpen] = useState(false);
 
   const closeAllPopups = () => {
     setEditAvatarPopupOpen(false);

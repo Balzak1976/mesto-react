@@ -1,4 +1,12 @@
-export default class Api {
+const apiSettings = {
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-57',
+  headers: {
+    authorization: '4f5c1ea4-b5a2-4f77-88d2-569b5dbe0c66',
+    'Content-Type': 'application/json',
+  },
+};
+
+class Api {
   constructor(params) {
     this._baseUrl = params.baseUrl;
     this._headers = params.headers;
@@ -12,49 +20,48 @@ export default class Api {
   getInitialProfile() {
     const url = `${this._baseUrl}/users/me`;
 
-    return this._createFetch(url, "GET");
+    return this._createFetch(url, 'GET');
   }
 
   updateAvatar(dataAvatar) {
     const url = `${this._baseUrl}/users/me/avatar`;
 
-    return this._createFetch(url, "PATCH", dataAvatar);
+    return this._createFetch(url, 'PATCH', dataAvatar);
   }
 
   updateUserInfo(dataUser) {
     const url = `${this._baseUrl}/users/me`;
 
-    return this._createFetch(url, "PATCH", dataUser);
+    return this._createFetch(url, 'PATCH', dataUser);
   }
 
   getInitialCards() {
     const url = `${this._baseUrl}/cards`;
 
-    return this._createFetch(url, "GET");
+    return this._createFetch(url, 'GET');
   }
 
   addNewCard(dataCards) {
     const url = `${this._baseUrl}/cards`;
 
-    return this._createFetch(url, "POST", dataCards);
+    return this._createFetch(url, 'POST', dataCards);
   }
 
   deleteCard(dataCardId) {
     const url = `${this._baseUrl}/cards/${dataCardId}`;
 
-    return this._createFetch(url, "DELETE")
-
+    return this._createFetch(url, 'DELETE');
   }
 
   toggleLike(dataCard, isMyLike, callback) {
     const url = `${this._baseUrl}/cards/${dataCard._id}/likes`;
-    const typeMethod = isMyLike ? "DELETE" : "PUT";
+    const typeMethod = isMyLike ? 'DELETE' : 'PUT';
 
     this._createFetch(url, typeMethod)
-      .then((data) => {
+      .then(data => {
         callback(data);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   }
@@ -64,7 +71,7 @@ export default class Api {
       method: typeMethod,
       headers: this._headers,
       body: dataBody ? JSON.stringify(dataBody) : dataBody,
-    }).then((res) => {
+    }).then(res => {
       if (res.ok) {
         return res.json();
       }
@@ -73,3 +80,5 @@ export default class Api {
     });
   }
 }
+
+export const api = new Api(apiSettings);
