@@ -10,9 +10,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
 
   useEffect(() => {
     api.createQueueFetch()
-      .then(data => {
-        const [dataUser, dataCards] = data;
-
+      .then(([dataUser, dataCards]) => {
         setUserAvatar(dataUser.avatar);
         setUserName(dataUser.name);
         setUserDescription(dataUser.about);
@@ -63,11 +61,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
       <section className='cards'>
         <ul className='cards__list'>
           {cards.map(({ _id, ...props }) => (
-            <Card
-              key={_id}
-              props={props}
-              onCardClick={onCardClick}
-            />
+            <Card key={_id} props={props} onCardClick={onCardClick}/>
           ))}
         </ul>
       </section>

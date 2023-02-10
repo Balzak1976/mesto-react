@@ -1,22 +1,29 @@
 import React from 'react';
 
-function ImagePopup() {
+function ImagePopup({ card, isOpen, onClose }) {
+  const { cardLink, cardTitle } = card;
+
   return (
     <>
-      <section className='popup popup_type_zoom-picture'>
+      <section className={
+        `popup popup_type_zoom-picture ${isOpen && 'popup_opened'}`
+      }>
         <div className='popup__container popup__container_type_zoom-picture'>
           <button
             className='popup__close popup__close_type_zoom-picture'
+            onClick={onClose}
             type='button'
             aria-label='закрыть'
           ></button>
           <figure className='zoom-picture'>
             <img
               className='zoom-picture__image'
-              src='#'
-              alt='картинка'
+              src={cardLink}
+              alt={cardTitle}
             />
-            <figcaption className='zoom-picture__caption'></figcaption>
+            <figcaption className='zoom-picture__caption'>
+              {cardTitle}
+            </figcaption>
           </figure>
         </div>
       </section>

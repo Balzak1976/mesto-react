@@ -1,8 +1,8 @@
 import React from 'react';
 
-function Children({ inputs }) {
-  const inputComponents = inputs.map((input, index) => {
-    const { classNameModifier, placeholder, nameAttribute, typeAttribute, minLength, maxLength } = input;
+function Children({ props }) {
+  const inputComponents = props.map((prop, index) => {
+    const { classNameModifier, placeholder, nameAttribute, typeAttribute, minLength, maxLength } = prop;
 
     return (
       <label

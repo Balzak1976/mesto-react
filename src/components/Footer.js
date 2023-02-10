@@ -1,9 +1,12 @@
-import React from "react";
+import React from 'react';
 
 function Footer() {
+  const date = new Date();
   return (
-    <footer className="footer">
-      <p className="footer__copyright">&copy; 2022. Максим Скороходов</p>
+    <footer className='footer'>
+      <p className='footer__copyright'>
+        &copy; {date.getFullYear()}. Максим Скороходов
+      </p>
     </footer>
   );
 }

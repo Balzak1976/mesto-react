@@ -26,7 +26,7 @@ function PopupWithForm({ popupConfig, isOpen, onClose }) {
             noValidate
           >
 
-            {children && <Children inputs={children} />}
+            {children && <Children props={children} />}
             
             <button
               className='form__submit'

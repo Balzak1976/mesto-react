@@ -10,17 +10,25 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
-  const [isDelCardOpen, setDelCardOpen] = useState(false);
+  const [isDelCardPopupOpen, setDelCardPopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({});
+  const [isImagePopupOpen, setImagePopupOpen] = useState(false);
+
+  const handleEditAvatarClick = () => setEditAvatarPopupOpen(true);
+  const handleEditProfileClick = () => setEditProfilePopupOpen(true);
+  const handleAddPlaceClick = () => setAddPlacePopupOpen(true);
+  const handleCardClick = evt => {
+    setSelectedCard({ cardLink: evt.target.src, cardTitle: evt.target.alt});
+    setImagePopupOpen(true);
+  };
 
   const closeAllPopups = () => {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
-    setDelCardOpen(false);
+    setDelCardPopupOpen(false);
+    setImagePopupOpen(false);
   };
-  const handleEditAvatarClick = () => setEditAvatarPopupOpen(true);
-  const handleEditProfileClick = () => setEditProfilePopupOpen(true);
-  const handleAddPlaceClick = () => setAddPlacePopupOpen(true);
 
   return (
     <div className='root-app'>
@@ -31,6 +39,7 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
+          onCardClick={handleCardClick}
         />
 
         <Footer />
@@ -55,11 +64,15 @@ function App() {
 
         <PopupWithForm
           popupConfig={popupConfig.delCard}
-          isOpen={isDelCardOpen}
+          isOpen={isDelCardPopupOpen}
           onClose={closeAllPopups}
         />
 
-        <ImagePopup />
+        <ImagePopup
+          card={selectedCard}
+          isOpen={isImagePopupOpen}
+          onClose={closeAllPopups}
+        />
       </div>
     </div>
   );
