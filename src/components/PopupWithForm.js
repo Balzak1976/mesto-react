@@ -1,7 +1,6 @@
 import React from 'react';
-import Children from './Children';
 
-function PopupWithForm({ popupConfig: { classNameModifier, title, btnTitle, children }, isOpen, onClose }) {
+function PopupWithForm({ popupConfig: { classNameModifier, title, btnTitle }, isOpen, onClose, children }) {
   return (
     <section
       className={
@@ -22,8 +21,7 @@ function PopupWithForm({ popupConfig: { classNameModifier, title, btnTitle, chil
           name={classNameModifier}
           noValidate
         >
-
-          {children && <Children props={children} />}
+          {children}
           
           <button
             className='form__submit'

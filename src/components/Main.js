@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { api } from '../utils/Api';
 import Card from './Card';
 
+const defaultAvatar = require('../images/avatar.jpg');
+
 function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
-  const [userAvatar, setUserAvatar] = useState(false);
+  const [userAvatar, setUserAvatar] = useState(defaultAvatar);
   const [userName, setUserName] = useState('Жак-Ив Кусто');
   const [userDescription, setUserDescription] = useState('Исследователь');
   const [cards, setCards] = useState([]);
@@ -32,7 +34,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
           <div className='profile__avatar-icon'></div>
           <img
             className='profile__user-avatar'
-            src={userAvatar || require('../images/avatar.jpg')}
+            src={userAvatar}
             alt='аватар'
           />
         </div>

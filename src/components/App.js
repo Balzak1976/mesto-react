@@ -44,29 +44,100 @@ function App() {
 
         <Footer />
 
-        <PopupWithForm
-          popupConfig={popupConfig.avatar}
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-        />
+        <PopupWithForm  popupConfig={popupConfig.avatar}
+                        isOpen={isEditAvatarPopupOpen}
+                        onClose={closeAllPopups}
+        >
+          <fieldset className="form__container">
+            <label className="form__field">
+              <input
+                className="form__input form__input_avatar_img-link"
+                id="avatar-img-link-input"
+                placeholder="Ссылка на картинку"
+                name="avatar"
+                type="url"
+                required
+              />
+              <span className="form__input-error avatar-img-link-input-error">
+              </span>
+            </label>
+          </fieldset>
+        </PopupWithForm>
 
-        <PopupWithForm
-          popupConfig={popupConfig.profile}
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-        />
+        <PopupWithForm  popupConfig={popupConfig.profile}
+                        isOpen={isEditProfilePopupOpen}
+                        onClose={closeAllPopups}
+        >
+          <fieldset className="form__container">
+            <label className="form__field">
+              <input
+                className="form__input form__input_user_name"
+                id="user-name-input"
+                placeholder="Имя"
+                name="name"
+                type="text"
+                minLength="2"
+                maxLength="40"
+                required
+              />
+              <span className="form__input-error user-name-input-error"></span>
+            </label>
+            <label className="form__field">
+              <input
+                className="form__input form__input_user_about"
+                id="user-about-input"
+                placeholder="О себе"
+                name="about"
+                type="text"
+                minLength="2"
+                maxLength="200"
+                required
+              />
+              <span className="form__input-error user-about-input-error">
+              </span>
+            </label>
+          </fieldset>
+        </PopupWithForm>
 
-        <PopupWithForm
-          popupConfig={popupConfig.card}
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-        />
+        <PopupWithForm  popupConfig={popupConfig.card}
+                        isOpen={isAddPlacePopupOpen}
+                        onClose={closeAllPopups}
+        >
+          <fieldset className="form__container">
+            <label className="form__field">
+              <input
+                className="form__input form__input_card_name"
+                id="card-name-input"
+                placeholder="Название"
+                name="name"
+                type="text"
+                minLength="2"
+                maxLength="30"
+                required
+              />
+              <span className="form__input-error card-name-input-error">
+              </span>
+            </label>
+            <label className="form__field">
+              <input
+                className="form__input form__input_card_img-link"
+                id="card-img-link-input"
+                placeholder="Ссылка на картинку"
+                name="link"
+                type="url"
+                required
+              />
+              <span className="form__input-error card-img-link-input-error">
+              </span>
+            </label>
+          </fieldset>
+        </PopupWithForm>
 
-        <PopupWithForm
-          popupConfig={popupConfig.delCard}
-          isOpen={isDelCardPopupOpen}
-          onClose={closeAllPopups}
-        />
+        <PopupWithForm  popupConfig={popupConfig.delCard}
+                        isOpen={isDelCardPopupOpen}
+                        onClose={closeAllPopups}
+        >
+        </PopupWithForm>
 
         <ImagePopup
           card={selectedCard}
