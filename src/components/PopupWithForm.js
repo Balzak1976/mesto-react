@@ -1,6 +1,6 @@
 import React from 'react';
 
-function PopupWithForm({ popupConfig: { classNameModifier, title, btnTitle }, isOpen, onClose, children }) {
+function PopupWithForm({ popupConfig: { classNameModifier, title, btnTitle }, isOpen, onClose, onSubmit, children }) {
   return (
     <section
       className={
@@ -19,6 +19,7 @@ function PopupWithForm({ popupConfig: { classNameModifier, title, btnTitle }, is
         <form
           className={`form form_type_${classNameModifier}`}
           name={classNameModifier}
+          onSubmit={onSubmit}
           noValidate
         >
           {children}
@@ -27,7 +28,6 @@ function PopupWithForm({ popupConfig: { classNameModifier, title, btnTitle }, is
             className='form__submit'
             name='submit'
             type='submit'
-            disabled
           >
             {btnTitle}
           </button>

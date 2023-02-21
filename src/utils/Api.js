@@ -29,7 +29,7 @@ class Api {
     return this._createFetch(url, 'PATCH', dataAvatar);
   }
 
-  updateUserInfo(dataUser) {
+  setUserInfo(dataUser) {
     const url = `${this._baseUrl}/users/me`;
 
     return this._createFetch(url, 'PATCH', dataUser);
