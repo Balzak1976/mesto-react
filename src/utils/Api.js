@@ -14,10 +14,10 @@ class Api {
   }
 
   createQueueFetch() {
-    return Promise.all([this.getInitialProfile(), this.getInitialCards()]);
+    return Promise.all([this.getUserInfo(), this.getInitialCards()]);
   }
 
-  getInitialProfile() {
+  getUserInfo() {
     const url = `${this._baseUrl}/users/me`;
 
     return this._createFetch(url, 'GET');
@@ -53,17 +53,11 @@ class Api {
     return this._createFetch(url, 'DELETE');
   }
 
-  toggleLike(dataCard, isMyLike, callback) {
-    const url = `${this._baseUrl}/cards/${dataCard._id}/likes`;
-    const typeMethod = isMyLike ? 'DELETE' : 'PUT';
+  changeLikeCardStatus(dataCardId, isLiked) {
+    const url = `${this._baseUrl}/cards/${dataCardId}/likes`;
+    const typeMethod = isLiked ? 'DELETE' : 'PUT';
 
-    this._createFetch(url, typeMethod)
-      .then(data => {
-        callback(data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    return this._createFetch(url, typeMethod);
   }
 
   _createFetch(url, typeMethod, dataBody) {
@@ -71,7 +65,7 @@ class Api {
       method: typeMethod,
       headers: this._headers,
       body: dataBody ? JSON.stringify(dataBody) : dataBody,
-    }).then(res => {
+    }).then((res) => {
       if (res.ok) {
         return res.json();
       }

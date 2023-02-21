@@ -1,70 +1,71 @@
-import React, { useState, useEffect } from 'react';
-import { api } from '../utils/Api';
+import React, { useContext } from 'react';
 import Card from './Card';
+import { CurrentUserContext } from './CurrentUserContext';
+import { CardsContext } from './CardsContext';
 
 const defaultAvatar = require('../images/avatar.jpg');
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
-  const [userAvatar, setUserAvatar] = useState(defaultAvatar);
-  const [userName, setUserName] = useState('Жак-Ив Кусто');
-  const [userDescription, setUserDescription] = useState('Исследователь');
-  const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    api.createQueueFetch()
-      .then(([dataUser, dataCards]) => {
-        setUserAvatar(dataUser.avatar);
-        setUserName(dataUser.name);
-        setUserDescription(dataUser.about);
-        
-        setCards(dataCards);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
+function Main({
+  onEditAvatar,
+  onEditProfile,
+  onAddPlace,
+  onCardClick,
+  onCardLike,
+  onCardDelete
+}) {
+  const currentUser = useContext(CurrentUserContext);
+  const cards = useContext(CardsContext);
+  const currentUserId = currentUser._id;
 
   return (
-    <main className='content'>
-      <section className='profile'>
+    <main className="content">
+      <section className="profile">
         <div
-          className='profile__avatar-cover'
+          className="profile__avatar-cover"
           onClick={onEditAvatar}
         >
-          <div className='profile__avatar-icon'></div>
+          <div className="profile__avatar-icon"></div>
           <img
-            className='profile__user-avatar'
-            src={userAvatar}
-            alt='аватар'
+            className="profile__user-avatar"
+            src={currentUser.avatar ?? defaultAvatar}
+            alt="аватар"
           />
         </div>
 
-        <article className='profile__info'>
-          <div className='profile__header'>
-            <h1 className='profile__user-name'>{userName}</h1>
+        <article className="profile__info">
+          <div className="profile__header">
+            <h1 className="profile__user-name">{currentUser?.name}</h1>
             <button
-              className='profile__edit-button'
+              className="profile__edit-button"
               onClick={onEditProfile}
-              type='button'
-              aria-label='редактировать'
+              type="button"
+              aria-label="редактировать"
             ></button>
           </div>
-          <p className='profile__user-about'>{userDescription}</p>
+          <p className="profile__user-about">{currentUser?.about}</p>
         </article>
 
         <button
-          className='profile__add-button'
+          className="profile__add-button"
           onClick={onAddPlace}
-          type='button'
-          aria-label='добавить'
+          type="button"
+          aria-label="добавить"
         ></button>
       </section>
 
-      <section className='cards'>
-        <ul className='cards__list'>
-          {cards.map(({ _id, ...props }) => (
-            <Card key={_id} props={props} onCardClick={onCardClick}/>
-          ))}
+      <section className="cards">
+        <ul className="cards__list">
+          {cards.map((props) => {
+            return (
+              <Card
+                key={props._id}
+                props={{ ...props, currentUserId }}
+                onCardClick={onCardClick}
+                onCardLike={onCardLike}
+                onCardDelete={onCardDelete}
+              />
+            );
+          })}
         </ul>
       </section>
     </main>
