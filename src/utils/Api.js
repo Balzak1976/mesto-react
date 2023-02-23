@@ -53,8 +53,8 @@ class Api {
     return this._createFetch(url, 'DELETE');
   }
 
-  changeLikeCardStatus(dataCardId, isLiked) {
-    const url = `${this._baseUrl}/cards/${dataCardId}/likes`;
+  changeLikeCardStatus(cardId, isLiked) {
+    const url = `${this._baseUrl}/cards/${cardId}/likes`;
     const typeMethod = isLiked ? 'DELETE' : 'PUT';
 
     return this._createFetch(url, typeMethod);

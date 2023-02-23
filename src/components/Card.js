@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CurrentUserContext } from './CurrentUserContext';
 
 function Card({
-  props: { name, link, likes, owner, currentUserId, _id },
+  props: { name, link, likes, owner, _id: cardId },
   onCardClick,
+  onCardDelete,
   onCardLike,
-  onCardDelete
 }) {
-  const isOwn = owner._id === currentUserId;
+  const currentUser = useContext(CurrentUserContext);
 
-  const isLiked = likes.some((i) => i._id === currentUserId);
+  const isOwn = owner._id === currentUser._id;
+
+  const isLiked = likes.some(i => i._id === currentUser._id);
+
   const cardLikeButtonClassName = `card__like-button ${
     isLiked && 'card__like-button_active'
-    }`;
-  
+  }`;
+
   return (
     <li className="card__item">
       <article className="card">
         {isOwn && (
           <button
             className="card__del-button"
-            onClick={() => onCardDelete({isOwn, _id})}
+            onClick={() => onCardDelete({ cardId })}
             type="button"
             aria-label="удалить"
           ></button>
@@ -35,7 +39,7 @@ function Card({
           <div className="card__like">
             <button
               className={cardLikeButtonClassName}
-              onClick={() => onCardLike({isLiked, _id})}
+              onClick={() => onCardLike({ isLiked, cardId })}
               type="button"
               aria-label="лайкнуть"
             ></button>

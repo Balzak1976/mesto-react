@@ -10,11 +10,10 @@ function Main({
   onAddPlace,
   cards,
   onCardClick,
+  onCardDelete,
   onCardLike,
-  onCardDelete
 }) {
   const currentUser = useContext(CurrentUserContext);
-  const currentUserId = currentUser._id;
 
   return (
     <main className="content">
@@ -58,10 +57,10 @@ function Main({
             return (
               <Card
                 key={props._id}
-                props={{ ...props, currentUserId }}
+                props={props}
                 onCardClick={onCardClick}
-                onCardLike={onCardLike}
                 onCardDelete={onCardDelete}
+                onCardLike={onCardLike}
               />
             );
           })}

@@ -5,10 +5,10 @@ import { CurrentUserContext } from './CurrentUserContext';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
 import EditAvatarPopup from './EditAvatarPopup';
 import EditProfilePopup from './EditProfilePopup';
 import AddPlacePopup from './AddPlacePopup';
+import DeleteCardPopup from './DeleteCardPopup';
 import ImagePopup from './ImagePopup';
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
-  const [isDelCardPopupOpen, setDelCardPopupOpen] = useState(false);
+  const [isDelCardPopupOpen, setDelCardPopupOpen] = useState({ isOpen: false });
   const [selectedCard, setSelectedCard] = useState({});
   const [isImagePopupOpen, setImagePopupOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
@@ -32,12 +32,15 @@ function App() {
     setSelectedCard({ cardLink: e.target.src, cardTitle: e.target.alt });
     setImagePopupOpen(true);
   };
+  const handleCardDelBtnClick = cardId => {
+    setDelCardPopupOpen({ isOpen: true, cardId });
+  };
 
   const closeAllPopups = () => {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
-    setDelCardPopupOpen(false);
+    setDelCardPopupOpen({ isOpen: false });
     setImagePopupOpen(false);
   };
 
@@ -79,27 +82,27 @@ function App() {
         console.log(err);
       });
   };
-  
+
   // ============================ CARDS =======================================
 
-  const handleCardDelete = ({ isOwn, _id }) => {
-    if (isOwn) {
-      api
-        .deleteCard(_id)
-        .then(() => {
-          setCards(state => state.filter(c => c._id !== _id));
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+  const handleCardDelete = ({ cardId }) => {
+    api
+      .deleteCard(cardId)
+      .then(() => {
+        setCards(state => state.filter(c => c._id !== cardId));
+
+        closeAllPopups();
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
-  const handleCardLike = ({ isLiked, _id }) => {
+  const handleCardLike = ({ cardId, isLiked }) => {
     api
-      .changeLikeCardStatus(_id, isLiked)
+      .changeLikeCardStatus(cardId, isLiked)
       .then(newCard => {
-        setCards(state => state.map(c => (c._id === _id ? newCard : c)));
+        setCards(state => state.map(c => (c._id === cardId ? newCard : c)));
       })
       .catch(err => {
         console.log(err);
@@ -135,7 +138,7 @@ function App() {
             cards={cards}
             onCardClick={handleCardClick}
             onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
+            onCardDelete={handleCardDelBtnClick}
           />
 
           <Footer />
@@ -161,11 +164,12 @@ function App() {
             onAddPlace={handleAddPlaceSubmit}
           />
 
-          <PopupWithForm
+          <DeleteCardPopup
             popupConfig={popupConfig.delCard}
             isOpen={isDelCardPopupOpen}
             onClose={closeAllPopups}
-          ></PopupWithForm>
+            onCardDelete={handleCardDelete}
+          />
 
           <ImagePopup
             card={selectedCard}
