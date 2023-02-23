@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { api } from '../utils/Api';
 import { popupConfig } from '../utils/settings';
+import { CardsContext } from './CardsContext';
+import { CurrentUserContext } from './CurrentUserContext';
+import EditAvatarPopup from './EditAvatarPopup';
+import EditProfilePopup from './EditProfilePopup';
 import Footer from './Footer';
 import Header from './Header';
 import ImagePopup from './ImagePopup';
 import Main from './Main';
 import PopupWithForm from './PopupWithForm';
-import EditAvatarPopup from './EditAvatarPopup';
-import EditProfilePopup from './EditProfilePopup';
-import { CurrentUserContext } from './CurrentUserContext';
-import { CardsContext } from './CardsContext';
 
 function App() {
   // ============================ STATES =======================================
@@ -41,30 +41,22 @@ function App() {
     setImagePopupOpen(false);
   };
 
-  const handleUpdateAvatar = (e) => {
-    e.preventDefault();
-    console.log('avatar:', e.target.avatar.value);
-
-    /* const dataUser = { avatar: e.target.avatar.value };
-    api
-      .setUserInfo(dataUser)
-      .then(() => {
-        setCurrentUser({ ...currentUser, ...dataUser });
+  const handleUpdateAvatar = ({avatar}) => {
+    api.setUserAvatar({ avatar })
+      .then((res) => {
+        setCurrentUser(res);
 
         closeAllPopups();
       })
       .catch(err => {
         console.log(err);
-      }); */
+      });
   }
 
-  const handleUpdateUser = (e) => {
-    e.preventDefault();
-
-    const dataUser = { name: e.target.name.value, about: e.target.about.value };
-    api.setUserInfo(dataUser)
-      .then(() => {
-        setCurrentUser({ ...currentUser, ...dataUser });
+  const handleUpdateUser = ({ name, about }) => {
+    api.setUserInfo({ name, about })
+      .then((res) => {
+        setCurrentUser(res);
 
         closeAllPopups();
       })
@@ -87,8 +79,7 @@ function App() {
 
   const handleCardDelete = ({ isOwn, _id }) => {
     isOwn &&
-      api
-        .deleteCard(_id)
+      api.deleteCard(_id)
         .then(() => {
           setCards(state => state.filter(c => c._id !== _id));
         })
@@ -97,11 +88,10 @@ function App() {
         });
   };
 
-  // ============================ EFFECTS ======================================
+  // ======================= Initial Profile, Cards ===========================
 
   useEffect(() => {
-    api
-      .createQueueFetch()
+    api.createQueueFetch()
       .then(([dataUser, dataCards]) => {
         setCurrentUser(dataUser);
         setCards(dataCards);
@@ -110,6 +100,8 @@ function App() {
         console.log(err);
       });
   }, []);
+
+// =============================================================================
 
   return (
     <div className="root-app">

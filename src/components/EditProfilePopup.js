@@ -8,6 +8,11 @@ function EditProfilePopup({ popupConfig, isOpen, onClose, onUpdateUser }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    onUpdateUser({ name, about: description });
+  };
+
   useEffect(() => {
     currentUser.name && setName(currentUser.name);
     currentUser.about && setDescription(currentUser.about);
@@ -18,7 +23,7 @@ function EditProfilePopup({ popupConfig, isOpen, onClose, onUpdateUser }) {
       popupConfig={popupConfig}
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={onUpdateUser}
+      onSubmit={handleSubmit}
     >
       <fieldset className="form__container">
         <label className="form__field">

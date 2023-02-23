@@ -1,6 +1,7 @@
 import React from 'react';
 
 function PopupWithForm({ popupConfig: { classNameModifier, title, btnTitle }, isOpen, onClose, onSubmit, children }) {
+  
   return (
     <section
       className={

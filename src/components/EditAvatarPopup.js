@@ -4,19 +4,23 @@ import PopupWithForm from './PopupWithForm';
 function EditAvatarPopup({ popupConfig, isOpen, onClose, onUpdateAvatar }) {
   const avatarRef = useRef();
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    onUpdateAvatar({avatar: avatarRef.current.value});
+  };
+
   return (
     <PopupWithForm
       popupConfig={popupConfig}
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={onUpdateAvatar}
+      onSubmit={handleSubmit}
     >
       <fieldset className="form__container">
         <label className="form__field">
           <input
             className="form__input form__input_avatar_img-link"
             ref={avatarRef}
-            // value={avatarRef?.current?.value ?? ""}
             id="avatar-img-link-input"
             placeholder="Ссылка на картинку"
             name="avatar"
