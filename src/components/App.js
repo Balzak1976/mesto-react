@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { api } from '../utils/Api';
 import { popupConfig } from '../utils/settings';
-import { CurrentUserContext } from './CurrentUserContext';
-import Header from './Header';
-import Main from './Main';
-import Footer from './Footer';
-import EditAvatarPopup from './EditAvatarPopup';
-import EditProfilePopup from './EditProfilePopup';
 import AddPlacePopup from './AddPlacePopup';
 import DeleteCardPopup from './DeleteCardPopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import EditProfilePopup from './EditProfilePopup';
+import Footer from './Footer';
+import Header from './Header';
 import ImagePopup from './ImagePopup';
+import Main from './Main';
 
 function App() {
   // ============================ STATES =======================================
@@ -22,6 +22,7 @@ function App() {
   const [isImagePopupOpen, setImagePopupOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+  const [buttonSubmitState, setButtonSubmitState] = useState(false);
 
   // ============================ POPUPS =======================================
 
@@ -45,6 +46,7 @@ function App() {
   };
 
   const handleUpdateAvatar = ({ avatar }) => {
+    setButtonSubmitState(true);
     api
       .setUserAvatar({ avatar })
       .then(res => {
@@ -54,10 +56,14 @@ function App() {
       })
       .catch(err => {
         console.log(err);
+      })
+      .finally(() => {
+        setButtonSubmitState(false);
       });
   };
 
   const handleUpdateUser = ({ name, about }) => {
+    setButtonSubmitState(true);
     api
       .setUserInfo({ name, about })
       .then(res => {
@@ -67,10 +73,14 @@ function App() {
       })
       .catch(err => {
         console.log(err);
+      })
+      .finally(() => {
+        setButtonSubmitState(false);
       });
   };
 
   const handleAddPlaceSubmit = ({ name, link }) => {
+    setButtonSubmitState(true);
     api
       .addPlace({ name, link })
       .then(newCard => {
@@ -80,23 +90,30 @@ function App() {
       })
       .catch(err => {
         console.log(err);
-      });
-  };
-
-  // ============================ CARDS =======================================
-
-  const handleCardDelete = ({ cardId }) => {
-    api
-      .deleteCard(cardId)
-      .then(() => {
-        setCards(state => state.filter(c => c._id !== cardId));
-
-        closeAllPopups();
       })
-      .catch(err => {
-        console.log(err);
+      .finally(() => {
+        setButtonSubmitState(false);
       });
   };
+  
+  const handleCardDelete = ({ cardId }) => {
+    setButtonSubmitState(true);
+    api
+    .deleteCard(cardId)
+    .then(() => {
+      setCards(state => state.filter(c => c._id !== cardId));
+      
+      closeAllPopups();
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    .finally(() => {
+      setButtonSubmitState(false);
+    });
+  };
+
+ // ============================ CARDS =======================================
 
   const handleCardLike = ({ cardId, isLiked }) => {
     api
@@ -146,27 +163,31 @@ function App() {
           <EditAvatarPopup
             popupConfig={popupConfig.avatar}
             isOpen={isEditAvatarPopupOpen}
+            isSaving={buttonSubmitState}
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
-          />
+            />
 
           <EditProfilePopup
             popupConfig={popupConfig.profile}
             isOpen={isEditProfilePopupOpen}
+            isSaving={buttonSubmitState}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
-          />
+            />
 
           <AddPlacePopup
             popupConfig={popupConfig.card}
             isOpen={isAddPlacePopupOpen}
+            isSaving={buttonSubmitState}
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit}
-          />
+            />
 
           <DeleteCardPopup
             popupConfig={popupConfig.delCard}
             isOpen={isDelCardPopupOpen}
+            isSaving={buttonSubmitState}
             onClose={closeAllPopups}
             onCardDelete={handleCardDelete}
           />

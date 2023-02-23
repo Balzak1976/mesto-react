@@ -1,18 +1,25 @@
 import React, { useRef } from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function EditAvatarPopup({ popupConfig, isOpen, onClose, onUpdateAvatar }) {
+function EditAvatarPopup({
+  popupConfig,
+  isOpen,
+  isSaving,
+  onClose,
+  onUpdateAvatar,
+}) {
   const avatarRef = useRef();
 
   const handleSubmit = e => {
     e.preventDefault();
-    onUpdateAvatar({avatar: avatarRef.current.value});
+    onUpdateAvatar({ avatar: avatarRef.current.value });
   };
 
   return (
     <PopupWithForm
       popupConfig={popupConfig}
       isOpen={isOpen}
+      isSaving={isSaving}
       onClose={onClose}
       onSubmit={handleSubmit}
     >

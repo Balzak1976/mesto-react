@@ -4,6 +4,7 @@ import PopupWithForm from './PopupWithForm';
 function DeleteCardPopup({
   popupConfig,
   isOpen: { isOpen, cardId },
+  isSaving,
   onClose,
   onCardDelete,
 }) {
@@ -16,6 +17,7 @@ function DeleteCardPopup({
     <PopupWithForm
       popupConfig={popupConfig}
       isOpen={isOpen}
+      isSaving={isSaving}
       onClose={onClose}
       onSubmit={handleSubmit}
     />

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup({ popupConfig, isOpen, onClose, onAddPlace }) {
+function AddPlacePopup({ popupConfig, isOpen, isSaving, onClose, onAddPlace }) {
   const nameRef = useRef();
   const linkRef = useRef();
 
@@ -14,6 +14,7 @@ function AddPlacePopup({ popupConfig, isOpen, onClose, onAddPlace }) {
     <PopupWithForm
       popupConfig={popupConfig}
       isOpen={isOpen}
+      isSaving={isSaving}
       onClose={onClose}
       onSubmit={handleSubmit}
     >
