@@ -41,7 +41,7 @@ class Api {
     return this._createFetch(url, 'GET');
   }
 
-  addNewCard(dataCards) {
+  addPlace(dataCards) {
     const url = `${this._baseUrl}/cards`;
 
     return this._createFetch(url, 'POST', dataCards);

@@ -28,9 +28,9 @@ function EditProfilePopup({ popupConfig, isOpen, onClose, onUpdateUser }) {
       <fieldset className="form__container">
         <label className="form__field">
           <input
-            className="form__input form__input_user_name"
             value={name}
             onChange={e => setName(e.target.value)}
+            className="form__input form__input_user_name"
             id="user-name-input"
             placeholder="Имя"
             name="name"
@@ -43,9 +43,9 @@ function EditProfilePopup({ popupConfig, isOpen, onClose, onUpdateUser }) {
         </label>
         <label className="form__field">
           <input
-            className="form__input form__input_user_about"
             value={description}
             onChange={e => setDescription(e.target.value)}
+            className="form__input form__input_user_about"
             id="user-about-input"
             placeholder="О себе"
             name="about"

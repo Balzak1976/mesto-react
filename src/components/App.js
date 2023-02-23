@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { api } from '../utils/Api';
 import { popupConfig } from '../utils/settings';
-import { CardsContext } from './CardsContext';
 import { CurrentUserContext } from './CurrentUserContext';
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
+import PopupWithForm from './PopupWithForm';
 import EditAvatarPopup from './EditAvatarPopup';
 import EditProfilePopup from './EditProfilePopup';
-import Footer from './Footer';
-import Header from './Header';
+import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
-import Main from './Main';
-import PopupWithForm from './PopupWithForm';
 
 function App() {
   // ============================ STATES =======================================
@@ -41,9 +41,10 @@ function App() {
     setImagePopupOpen(false);
   };
 
-  const handleUpdateAvatar = ({avatar}) => {
-    api.setUserAvatar({ avatar })
-      .then((res) => {
+  const handleUpdateAvatar = ({ avatar }) => {
+    api
+      .setUserAvatar({ avatar })
+      .then(res => {
         setCurrentUser(res);
 
         closeAllPopups();
@@ -51,11 +52,12 @@ function App() {
       .catch(err => {
         console.log(err);
       });
-  }
+  };
 
   const handleUpdateUser = ({ name, about }) => {
-    api.setUserInfo({ name, about })
-      .then((res) => {
+    api
+      .setUserInfo({ name, about })
+      .then(res => {
         setCurrentUser(res);
 
         closeAllPopups();
@@ -63,12 +65,39 @@ function App() {
       .catch(err => {
         console.log(err);
       });
-  }
+  };
 
+  const handleAddPlaceSubmit = ({ name, link }) => {
+    api
+      .addPlace({ name, link })
+      .then(newCard => {
+        setCards([newCard, ...cards]);
+
+        closeAllPopups();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  
   // ============================ CARDS =======================================
 
+  const handleCardDelete = ({ isOwn, _id }) => {
+    if (isOwn) {
+      api
+        .deleteCard(_id)
+        .then(() => {
+          setCards(state => state.filter(c => c._id !== _id));
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  };
+
   const handleCardLike = ({ isLiked, _id }) => {
-    api.changeLikeCardStatus(_id, isLiked)
+    api
+      .changeLikeCardStatus(_id, isLiked)
       .then(newCard => {
         setCards(state => state.map(c => (c._id === _id ? newCard : c)));
       })
@@ -77,21 +106,11 @@ function App() {
       });
   };
 
-  const handleCardDelete = ({ isOwn, _id }) => {
-    isOwn &&
-      api.deleteCard(_id)
-        .then(() => {
-          setCards(state => state.filter(c => c._id !== _id));
-        })
-        .catch(err => {
-          console.log(err);
-        });
-  };
-
   // ======================= Initial Profile, Cards ===========================
 
   useEffect(() => {
-    api.createQueueFetch()
+    api
+      .createQueueFetch()
       .then(([dataUser, dataCards]) => {
         setCurrentUser(dataUser);
         setCards(dataCards);
@@ -101,7 +120,7 @@ function App() {
       });
   }, []);
 
-// =============================================================================
+  // =============================================================================
 
   return (
     <div className="root-app">
@@ -109,16 +128,15 @@ function App() {
         <CurrentUserContext.Provider value={currentUser}>
           <Header />
 
-          <CardsContext.Provider value={cards}>
-            <Main
-              onEditAvatar={handleEditAvatarClick}
-              onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-              onCardClick={handleCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
-            />
-          </CardsContext.Provider>
+          <Main
+            onEditAvatar={handleEditAvatarClick}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            cards={cards}
+            onCardClick={handleCardClick}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
+          />
 
           <Footer />
 
@@ -136,38 +154,12 @@ function App() {
             onUpdateUser={handleUpdateUser}
           />
 
-          <PopupWithForm
+          <AddPlacePopup
             popupConfig={popupConfig.card}
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
-          >
-            <fieldset className="form__container">
-              <label className="form__field">
-                <input
-                  className="form__input form__input_card_name"
-                  id="card-name-input"
-                  placeholder="Название"
-                  name="name"
-                  type="text"
-                  minLength="2"
-                  maxLength="30"
-                  required
-                />
-                <span className="form__input-error card-name-input-error"></span>
-              </label>
-              <label className="form__field">
-                <input
-                  className="form__input form__input_card_img-link"
-                  id="card-img-link-input"
-                  placeholder="Ссылка на картинку"
-                  name="link"
-                  type="url"
-                  required
-                />
-                <span className="form__input-error card-img-link-input-error"></span>
-              </label>
-            </fieldset>
-          </PopupWithForm>
+            onAddPlace={handleAddPlaceSubmit}
+          />
 
           <PopupWithForm
             popupConfig={popupConfig.delCard}

@@ -19,8 +19,8 @@ function EditAvatarPopup({ popupConfig, isOpen, onClose, onUpdateAvatar }) {
       <fieldset className="form__container">
         <label className="form__field">
           <input
-            className="form__input form__input_avatar_img-link"
             ref={avatarRef}
+            className="form__input form__input_avatar_img-link"
             id="avatar-img-link-input"
             placeholder="Ссылка на картинку"
             name="avatar"

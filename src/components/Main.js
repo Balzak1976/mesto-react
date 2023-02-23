@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import Card from './Card';
 import { CurrentUserContext } from './CurrentUserContext';
-import { CardsContext } from './CardsContext';
 
 const defaultAvatar = require('../images/avatar.jpg');
 
@@ -9,12 +8,12 @@ function Main({
   onEditAvatar,
   onEditProfile,
   onAddPlace,
+  cards,
   onCardClick,
   onCardLike,
   onCardDelete
 }) {
   const currentUser = useContext(CurrentUserContext);
-  const cards = useContext(CardsContext);
   const currentUserId = currentUser._id;
 
   return (
