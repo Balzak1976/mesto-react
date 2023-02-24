@@ -5,9 +5,11 @@ import PopupWithForm from './PopupWithForm';
 function EditProfilePopup({
   popupConfig,
   isOpen,
-  isSaving,
   onClose,
   onUpdateUser,
+  onValidity,
+  buttonSubmitState,
+  inputErrors,
 }) {
   const currentUser = useContext(CurrentUserContext);
 
@@ -28,9 +30,10 @@ function EditProfilePopup({
     <PopupWithForm
       popupConfig={popupConfig}
       isOpen={isOpen}
-      isSaving={isSaving}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonSubmitState={buttonSubmitState}
+      onValidity={onValidity}
     >
       <fieldset className="form__container">
         <label className="form__field">
@@ -46,7 +49,13 @@ function EditProfilePopup({
             maxLength="40"
             required
           />
-          <span className="form__input-error user-name-input-error"></span>
+          <span
+            className={`form__input-error ${
+              inputErrors?.name && 'form__input-error_active'
+            }`}
+          >
+            {inputErrors?.name}
+          </span>
         </label>
         <label className="form__field">
           <input
@@ -61,7 +70,13 @@ function EditProfilePopup({
             maxLength="200"
             required
           />
-          <span className="form__input-error user-about-input-error"></span>
+          <span
+            className={`form__input-error ${
+              inputErrors?.about && 'form__input-error_active'
+            }`}
+          >
+            {inputErrors?.about}
+          </span>
         </label>
       </fieldset>
     </PopupWithForm>

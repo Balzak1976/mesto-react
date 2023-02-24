@@ -1,7 +1,15 @@
 import React, { useRef } from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup({ popupConfig, isOpen, isSaving, onClose, onAddPlace }) {
+function AddPlacePopup({
+  popupConfig,
+  isOpen,
+  onClose,
+  onAddPlace,
+  onValidity,
+  buttonSubmitState,
+  inputErrors,
+}) {
   const nameRef = useRef();
   const linkRef = useRef();
 
@@ -14,9 +22,10 @@ function AddPlacePopup({ popupConfig, isOpen, isSaving, onClose, onAddPlace }) {
     <PopupWithForm
       popupConfig={popupConfig}
       isOpen={isOpen}
-      isSaving={isSaving}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonSubmitState={buttonSubmitState}
+      onValidity={onValidity}
     >
       <fieldset className="form__container">
         <label className="form__field">
@@ -31,7 +40,13 @@ function AddPlacePopup({ popupConfig, isOpen, isSaving, onClose, onAddPlace }) {
             maxLength="30"
             required
           />
-          <span className="form__input-error card-name-input-error"></span>
+          <span
+            className={`form__input-error ${
+              inputErrors?.name && 'form__input-error_active'
+            }`}
+          >
+            {inputErrors?.name}
+          </span>
         </label>
         <label className="form__field">
           <input
@@ -43,7 +58,13 @@ function AddPlacePopup({ popupConfig, isOpen, isSaving, onClose, onAddPlace }) {
             type="url"
             required
           />
-          <span className="form__input-error card-img-link-input-error"></span>
+          <span
+            className={`form__input-error ${
+              inputErrors?.link && 'form__input-error_active'
+            }`}
+          >
+            {inputErrors?.link}
+          </span>
         </label>
       </fieldset>
     </PopupWithForm>

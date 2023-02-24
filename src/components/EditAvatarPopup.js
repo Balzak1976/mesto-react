@@ -4,9 +4,11 @@ import PopupWithForm from './PopupWithForm';
 function EditAvatarPopup({
   popupConfig,
   isOpen,
-  isSaving,
   onClose,
   onUpdateAvatar,
+  onValidity,
+  buttonSubmitState,
+  inputErrors,
 }) {
   const avatarRef = useRef();
 
@@ -19,9 +21,10 @@ function EditAvatarPopup({
     <PopupWithForm
       popupConfig={popupConfig}
       isOpen={isOpen}
-      isSaving={isSaving}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonSubmitState={buttonSubmitState}
+      onValidity={onValidity}
     >
       <fieldset className="form__container">
         <label className="form__field">
@@ -34,7 +37,13 @@ function EditAvatarPopup({
             type="url"
             required
           />
-          <span className="form__input-error avatar-img-link-input-error"></span>
+          <span
+            className={`form__input-error ${
+              inputErrors?.avatar && 'form__input-error_active'
+            }`}
+          >
+            {inputErrors?.avatar}
+          </span>
         </label>
       </fieldset>
     </PopupWithForm>

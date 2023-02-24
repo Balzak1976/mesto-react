@@ -23,6 +23,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [buttonSubmitState, setButtonSubmitState] = useState(false);
+  const [validationErrors, setValidationErrors] = useState(null);
 
   // ============================ POPUPS =======================================
 
@@ -95,25 +96,25 @@ function App() {
         setButtonSubmitState(false);
       });
   };
-  
+
   const handleCardDelete = ({ cardId }) => {
     setButtonSubmitState(true);
     api
-    .deleteCard(cardId)
-    .then(() => {
-      setCards(state => state.filter(c => c._id !== cardId));
-      
-      closeAllPopups();
-    })
-    .catch(err => {
-      console.log(err);
-    })
-    .finally(() => {
-      setButtonSubmitState(false);
-    });
+      .deleteCard(cardId)
+      .then(() => {
+        setCards(state => state.filter(c => c._id !== cardId));
+
+        closeAllPopups();
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => {
+        setButtonSubmitState(false);
+      });
   };
 
- // ============================ CARDS =======================================
+  // ============================ CARDS =======================================
 
   const handleCardLike = ({ cardId, isLiked }) => {
     api
@@ -140,7 +141,22 @@ function App() {
       });
   }, []);
 
-  // =============================================================================
+  // ================================ VALIDATION ===============================
+
+  const enableValidation = e => {
+    // console.log("valid",e.target.validity.valid);
+    // console.log("massage", e.target.name    );
+    // console.log(validationErrors);
+
+    if (!e.target.validity.valid) {
+      setValidationErrors({
+        ...validationErrors,
+        [e.target.name]: e.target.validationMessage,
+      });
+    } else setValidationErrors(null);
+  };
+
+  // ===========================================================================
 
   return (
     <div className="root-app">
@@ -163,33 +179,39 @@ function App() {
           <EditAvatarPopup
             popupConfig={popupConfig.avatar}
             isOpen={isEditAvatarPopupOpen}
-            isSaving={buttonSubmitState}
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
-            />
+            onValidity={enableValidation}
+            buttonSubmitState={buttonSubmitState}
+            inputErrors={validationErrors}
+          />
 
           <EditProfilePopup
             popupConfig={popupConfig.profile}
             isOpen={isEditProfilePopupOpen}
-            isSaving={buttonSubmitState}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
-            />
+            onValidity={enableValidation}
+            buttonSubmitState={buttonSubmitState}
+            inputErrors={validationErrors}
+          />
 
           <AddPlacePopup
             popupConfig={popupConfig.card}
             isOpen={isAddPlacePopupOpen}
-            isSaving={buttonSubmitState}
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit}
-            />
+            onValidity={enableValidation}
+            buttonSubmitState={buttonSubmitState}
+            inputErrors={validationErrors}
+          />
 
           <DeleteCardPopup
             popupConfig={popupConfig.delCard}
             isOpen={isDelCardPopupOpen}
-            isSaving={buttonSubmitState}
             onClose={closeAllPopups}
             onCardDelete={handleCardDelete}
+            buttonSubmitState={buttonSubmitState}
           />
 
           <ImagePopup

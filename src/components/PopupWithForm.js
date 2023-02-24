@@ -3,11 +3,13 @@ import React from 'react';
 function PopupWithForm({
   popupConfig: { classNameModifier, title, btnTitleSaving, btnTitle },
   isOpen,
-  isSaving,
   onClose,
   onSubmit,
+  buttonSubmitState,
+  onValidity,
   children,
 }) {
+
   return (
     <section
       className={`popup popup_type_${classNameModifier} ${
@@ -27,6 +29,7 @@ function PopupWithForm({
           className={`form form_type_${classNameModifier}`}
           name={classNameModifier}
           onSubmit={onSubmit}
+          onChange={onValidity}
           noValidate
         >
           {children}
@@ -36,7 +39,7 @@ function PopupWithForm({
             name="submit"
             type="submit"
           >
-            {isSaving ? btnTitleSaving : btnTitle}
+            {buttonSubmitState ? btnTitleSaving : btnTitle}
           </button>
         </form>
       </div>

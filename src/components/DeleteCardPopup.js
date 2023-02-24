@@ -4,8 +4,8 @@ import PopupWithForm from './PopupWithForm';
 function DeleteCardPopup({
   popupConfig,
   isOpen: { isOpen, cardId },
-  isSaving,
   onClose,
+  buttonSubmitState,
   onCardDelete,
 }) {
   const handleSubmit = e => {
@@ -17,9 +17,9 @@ function DeleteCardPopup({
     <PopupWithForm
       popupConfig={popupConfig}
       isOpen={isOpen}
-      isSaving={isSaving}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonSubmitState={buttonSubmitState}
     />
   );
 }
