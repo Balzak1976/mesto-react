@@ -4,6 +4,7 @@ export const popupConfig = {
     title: 'Обновить аватар',
     btnTitleSaving: 'Сохранить...',
     btnTitle: 'Сохранить',
+    btnUnlock: true
   },
   
   profile: {
@@ -11,6 +12,7 @@ export const popupConfig = {
     title: 'Редактировать профиль',
     btnTitleSaving: 'Сохранить...',
     btnTitle: 'Сохранить',
+    btnUnlock: true
   },
   
   card: {
@@ -18,6 +20,7 @@ export const popupConfig = {
     title: 'Новое место',
     btnTitleSaving: 'Сохранить...',
     btnTitle: 'Сохранить',
+    btnUnlock: true
   },
   
   delCard: {
@@ -25,5 +28,6 @@ export const popupConfig = {
     title: 'Вы уверены?',
     btnTitleSaving: 'Да...',
     btnTitle: 'Да',
+    btnUnlock:false
   },
 };

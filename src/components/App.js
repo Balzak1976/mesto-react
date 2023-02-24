@@ -22,8 +22,11 @@ function App() {
   const [isImagePopupOpen, setImagePopupOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
-  const [buttonSubmitState, setButtonSubmitState] = useState(false);
-  const [validationErrors, setValidationErrors] = useState(null);
+  const [btnSubmitState, setBtnSubmitState] = useState({
+    isSaving: false,
+    disabled: true,
+  });
+  const [validationErrors, setValidationErrors] = useState({});
 
   // ============================ POPUPS =======================================
 
@@ -47,7 +50,7 @@ function App() {
   };
 
   const handleUpdateAvatar = ({ avatar }) => {
-    setButtonSubmitState(true);
+    setBtnSubmitState(s => ({ ...s, isSaving: true }));
     api
       .setUserAvatar({ avatar })
       .then(res => {
@@ -59,12 +62,12 @@ function App() {
         console.log(err);
       })
       .finally(() => {
-        setButtonSubmitState(false);
+        setBtnSubmitState(s => ({ ...s, isSaving: false }));
       });
   };
 
   const handleUpdateUser = ({ name, about }) => {
-    setButtonSubmitState(true);
+    setBtnSubmitState(s => ({ ...s, isSaving: true }));
     api
       .setUserInfo({ name, about })
       .then(res => {
@@ -76,12 +79,12 @@ function App() {
         console.log(err);
       })
       .finally(() => {
-        setButtonSubmitState(false);
+        setBtnSubmitState(s => ({ ...s, isSaving: false }));
       });
   };
 
   const handleAddPlaceSubmit = ({ name, link }) => {
-    setButtonSubmitState(true);
+    setBtnSubmitState(s => ({ ...s, isSaving: true }));
     api
       .addPlace({ name, link })
       .then(newCard => {
@@ -93,12 +96,12 @@ function App() {
         console.log(err);
       })
       .finally(() => {
-        setButtonSubmitState(false);
+        setBtnSubmitState(s => ({ ...s, isSaving: false }));
       });
   };
 
   const handleCardDelete = ({ cardId }) => {
-    setButtonSubmitState(true);
+    setBtnSubmitState(s => ({ ...s, isSaving: true }));
     api
       .deleteCard(cardId)
       .then(() => {
@@ -110,7 +113,7 @@ function App() {
         console.log(err);
       })
       .finally(() => {
-        setButtonSubmitState(false);
+        setBtnSubmitState(s => ({ ...s, isSaving: false }));
       });
   };
 
@@ -144,17 +147,22 @@ function App() {
   // ================================ VALIDATION ===============================
 
   const enableValidation = e => {
-    // console.log("valid",e.target.validity.valid);
-    // console.log("massage", e.target.name    );
-    // console.log(validationErrors);
-
-    if (!e.target.validity.valid) {
+    if (!e.currentTarget.checkValidity()) {
       setValidationErrors({
         ...validationErrors,
         [e.target.name]: e.target.validationMessage,
       });
-    } else setValidationErrors(null);
+      setBtnSubmitState(s => ({ ...s, disabled: true }));
+    } else {
+      setValidationErrors({});
+      setBtnSubmitState(s => ({ ...s, disabled: false }));
+    }
   };
+
+  useEffect(() => {
+    setValidationErrors({});
+    setBtnSubmitState(s => ({ ...s, disabled: true }));
+  }, [isEditProfilePopupOpen, isAddPlacePopupOpen, isEditAvatarPopupOpen]);
 
   // ===========================================================================
 
@@ -182,7 +190,7 @@ function App() {
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
             onValidity={enableValidation}
-            buttonSubmitState={buttonSubmitState}
+            buttonSubmitState={btnSubmitState}
             inputErrors={validationErrors}
           />
 
@@ -192,7 +200,7 @@ function App() {
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
             onValidity={enableValidation}
-            buttonSubmitState={buttonSubmitState}
+            buttonSubmitState={btnSubmitState}
             inputErrors={validationErrors}
           />
 
@@ -202,7 +210,7 @@ function App() {
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit}
             onValidity={enableValidation}
-            buttonSubmitState={buttonSubmitState}
+            buttonSubmitState={btnSubmitState}
             inputErrors={validationErrors}
           />
 
@@ -211,7 +219,7 @@ function App() {
             isOpen={isDelCardPopupOpen}
             onClose={closeAllPopups}
             onCardDelete={handleCardDelete}
-            buttonSubmitState={buttonSubmitState}
+            buttonSubmitState={btnSubmitState}
           />
 
           <ImagePopup

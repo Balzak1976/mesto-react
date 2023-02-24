@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
 function PopupWithForm({
-  popupConfig: { classNameModifier, title, btnTitleSaving, btnTitle },
+  popupConfig: {
+    classNameModifier,
+    title,
+    btnTitleSaving,
+    btnTitle,
+    btnUnlock,
+  },
   isOpen,
   onClose,
   onSubmit,
@@ -9,6 +15,12 @@ function PopupWithForm({
   onValidity,
   children,
 }) {
+  const formRef = useRef();
+
+  useEffect(() => {
+    // очищаем форму при открытии
+    isOpen && formRef.current.reset();
+  }, [isOpen]);
 
   return (
     <section
@@ -30,16 +42,20 @@ function PopupWithForm({
           name={classNameModifier}
           onSubmit={onSubmit}
           onChange={onValidity}
+          ref={formRef}
           noValidate
         >
           {children}
 
           <button
-            className="form__submit"
+            className={`form__submit ${
+            btnUnlock &&  buttonSubmitState.disabled && 'form__submit_inactive'
+            }`}
             name="submit"
             type="submit"
+            disabled={btnUnlock && buttonSubmitState.disabled}
           >
-            {buttonSubmitState ? btnTitleSaving : btnTitle}
+            {buttonSubmitState.isSaving ? btnTitleSaving : btnTitle}
           </button>
         </form>
       </div>
